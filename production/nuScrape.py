@@ -22,6 +22,16 @@ def saveTxtFile(postId,html):
     f = file.write(html)
     file.close()
 
+# Recursively try to get content box
+def recurseContent(driver):
+    try:
+        time.sleep(.25)
+        content= driver.find_element_by_css_selector("job-element.ng-isolate-scope")
+        content.click()
+
+    except:
+        recurseContent(driver)
+
 # Initializing Browser
 driver = webdriver.Chrome()
 
@@ -54,8 +64,7 @@ jobNum = 1
 for i in range(num):
 
     # Opening Job Page
-    content = driver.find_element_by_css_selector("job-element.ng-isolate-scope")
-    content.click()
+    recurseContent(driver)
 
     # While loading, sleep
     while link == driver.current_url:
@@ -79,14 +88,18 @@ for i in range(num):
     
     # Increasing jobnum
     jobNum = jobNum + 1
-    # New link
+
+    # Setting old link
+    oldLink = link
+    
+    # Getting New link
     link = "https://northeastern-csm.symplicity.com/students/app/jobs/search?page=" + str(jobNum) + "&perPage=1&job_type=5"
 
     # Get next link
     driver.get(link)
 
     # While loading, sleep
-    while link == driver.current_url:
+    while oldLink == driver.current_url:
         time.sleep(1)
 
 
