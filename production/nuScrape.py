@@ -12,6 +12,8 @@ import pyautogui
 # |USAGE|
 # No real need for oop yet
 # Just a slightly jank simulated browser
+# Also only runable on my machine and
+# Requires manual inputs + logins
 # --------------------------------------
 
 # Save html in a text file
